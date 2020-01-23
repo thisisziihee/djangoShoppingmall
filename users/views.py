@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic.edit import FormView
 from .forms import RegisterForm, LoginForm
 from .models import Users
@@ -32,3 +32,9 @@ class LoginView(FormView):
     def form_valid(self, form):
         self.request.session['user'] = form.data.get('email')
         return super().form_valid(form)
+
+
+def logout(request):
+    if request.session.get('user'):
+        del(request.session['user'])
+    return redirect('/')
