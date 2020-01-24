@@ -1,5 +1,35 @@
 {% extends 'base.html' %}
 {% load humanize %}
+
+{% block header %}
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url : "/api/product",
+            success : function(result){
+                console.log(result)
+            }
+        });
+    })
+
+    function product_detail(id){
+        $.ajax({
+            url:"/api/product/"+id,
+            success : function(result){
+                $("#product-"+id).popover({
+                    html : true,
+                    content : result.name + "<br>" + result.price
+                }).popover('show');
+            }
+        })
+    }
+
+    function product_leave(id){
+        $("#product-"+id).popover('hide');
+    }
+</script>
+{% endblock %}
+
 {% block contents %}
 <div class = "row mt-5">
     <div class = "col-12">
@@ -14,7 +44,8 @@
                 {% for product in object_list %}
                 <tr>
                     <td scope = "col">{{product.id}}</td>
-                    <td>{{ product.name }}</td>
+                    <td><a id = "product-{{product.id}}" onmouseenter = "product_detail( {{ product.id }} );" onmouseleave = "product_leave( {{product.id}} );"
+                        href = "/product/{{product.id}}">{{ product.name }}</a></td>
                     <td>{{ product.price | intcomma }}원</td>
                     <td>{{ product.registered_date | date:'Y-m-d H:i'}}</td>
                 </tr>
