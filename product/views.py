@@ -4,6 +4,11 @@ from .forms import RegisterForm
 from django.views.generic.edit import FormView
 from django.utils.decorators import method_decorator
 from users.decorators import admin_required
+from django.views.generic import ListView
+
+class ProductList(ListView):
+    model = Product
+    template_name = 'product_list.html'
 
 
 @method_decorator(admin_required, name = 'dispatch')
