@@ -24,6 +24,6 @@ class OrderForm(forms.ModelForm):
         user = self.request.session.get('user')
 
     
-    if not(quantity and product and user):
+    if not(quantity and product):
         self.add_error('quantity', "수량이 없습니다.")
         self.add_error('product', "상품이 없습니다.")
