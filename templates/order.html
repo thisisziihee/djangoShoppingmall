@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block contents %}
+
+<div class = "row mt-5">
+    <div class = "col-12">
+        <table class = "table table-dark">
+            <thead class = "thead thead-dark">
+                <tr>
+                    <td scope = "col">#</td>
+                    <td scope = "col">상품명</td>
+                    <td scope = "col">수량</td>
+                    <td scope = "col">주문날짜</td>
+                </tr>
+            </thead>
+            <tbody class = "text-light">
+                {% for order in object_list %}
+                <tr>
+                    <td scope = "col">{{order.id}}</td>
+                    <td>{{order.product}}</td>
+                    <td>{{order.quantity | intcomma}}개</td>
+                    <td>{{order.registered_date | date:'Y-m-d H:i'}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
